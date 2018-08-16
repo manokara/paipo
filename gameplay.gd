@@ -20,6 +20,9 @@ const TIME = 120
 const PIPE_COUNT = 6 # number of pipe types
 const GRID_MAX = [7, 6]
 const FILL_START = [0, 0]
+const snd_turn = preload("res://turn.wav")
+const snd_ohno = preload("res://ohno.wav")
+const snd_clear = preload("res://clear.wav")
 var cursor = Vector2(0, 0)
 var stopped = false
 var fill_mutex = Mutex.new()
@@ -32,6 +35,7 @@ func _ready():
 	$tm_blink.start()
 	$time.connect("finished", self, "on_time_finished")
 	$time.start()
+	$music.play()
 	$anim.play("fade_out")
 
 func _input(event):
@@ -61,6 +65,7 @@ func fill():
 	stop_everything()
 	$start/fill.show()
 	$tm_fill.start()
+	$water.play()
 
 func unfill():
 	for pipe in $pipes.get_children():
@@ -72,6 +77,7 @@ func unfill():
 func flip_pipe():
 	var pipe = get_pipe_at_cursor()
 	assert pipe != null
+	$sfx.play()
 	pipe.flip()
 
 func on_key_pressed(key):
@@ -112,6 +118,7 @@ func reset():
 		"last_pipe": null,
 	}
 
+	$sfx.stream = snd_turn
 	unfill()
 	$endround.hide()
 	$time.pause()
@@ -163,10 +170,16 @@ func _on_tm_fill_timeout():
 
 	if not goal and not passable:
 		$tm_fill.stop()
+		$water.stop()
+		$sfx.stream = snd_ohno
+		$sfx.play()
 		$anim.play("ohno")
 		return
 	elif goal:
 		$tm_fill.stop()
+		$water.stop()
+		$sfx.stream = snd_clear
+		$sfx.play()
 		$anim.play("clear")
 		return
 

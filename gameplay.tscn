@@ -1,9 +1,12 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://gameplay.gd" type="Script" id=1]
 [ext_resource path="res://sheet.png" type="Texture" id=2]
 [ext_resource path="res://time.gd" type="Script" id=3]
 [ext_resource path="res://pipe.tscn" type="PackedScene" id=4]
+[ext_resource path="res://turn.wav" type="AudioStream" id=5]
+[ext_resource path="res://water-noise.wav" type="AudioStream" id=6]
+[ext_resource path="res://water.gd" type="Script" id=7]
 
 [sub_resource type="Animation" id=1]
 
@@ -253,7 +256,7 @@ tracks/5/keys = {
 } ]
 }
 
-[node name="gameplay" type="ColorRect"]
+[node name="gameplay" type="ColorRect" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -726,6 +729,34 @@ anims/fade_in = SubResource( 2 )
 anims/fade_out = SubResource( 3 )
 anims/ohno = SubResource( 4 )
 blend_times = [  ]
+
+[node name="music" type="AudioStreamPlayer" parent="." index="11"]
+
+stream = null
+volume_db = 0.0
+pitch_scale = 1.0
+autoplay = false
+mix_target = 0
+bus = "Master"
+
+[node name="sfx" type="AudioStreamPlayer" parent="." index="12"]
+
+stream = ExtResource( 5 )
+volume_db = -8.0
+pitch_scale = 1.0
+autoplay = false
+mix_target = 0
+bus = "Master"
+
+[node name="water" type="AudioStreamPlayer" parent="." index="13"]
+
+stream = ExtResource( 6 )
+volume_db = -16.0
+pitch_scale = 1.0
+autoplay = false
+mix_target = 0
+bus = "Water"
+script = ExtResource( 7 )
 
 [connection signal="timeout" from="time/tm" to="time" method="_on_tm_timeout"]
 

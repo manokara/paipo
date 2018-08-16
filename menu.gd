@@ -9,10 +9,14 @@ func _input(event):
 		if event.pressed and event.scancode == KEY_ENTER and not pressed:
 			pressed = true
 			$press.visible = false
+			$aud_press.play()
 			$timer.start()
 
 func enable_press():
 	pressed = false
+
+func play_water():
+	$aud_water.play()
 
 func _on_anim_animation_finished(anim_name):
 	if anim_name == "start":
