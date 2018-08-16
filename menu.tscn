@@ -6,7 +6,7 @@
 [sub_resource type="Animation" id=1]
 
 resource_name = "start"
-length = 2.7
+length = 3.0
 loop = false
 step = 0.05
 tracks/0/type = "value"
@@ -40,7 +40,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 2.2, 2.5 ),
+"times": PoolRealArray( 0, 2.2, 2.65 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 1, 8 ) ]
@@ -64,7 +64,7 @@ tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 2.2, 2.5 ),
+"times": PoolRealArray( 0, 2.2, 2.65 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 1, 8 ) ]
@@ -88,7 +88,7 @@ tracks/6/loop_wrap = true
 tracks/6/imported = false
 tracks/6/enabled = true
 tracks/6/keys = {
-"times": PoolRealArray( 0, 2.5 ),
+"times": PoolRealArray( 0, 2.65 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ false, true ]
@@ -100,7 +100,7 @@ tracks/7/loop_wrap = true
 tracks/7/imported = false
 tracks/7/enabled = true
 tracks/7/keys = {
-"times": PoolRealArray( 2.5, 2.55, 2.6, 2.65, 2.7 ),
+"times": PoolRealArray( 2.65, 2.7, 2.75, 2.8, 2.85 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ Rect2( 64, 8, 64, 8 ), Rect2( 64, 16, 64, 8 ), Rect2( 64, 24, 64, 8 ), Rect2( 64, 32, 64, 8 ), Rect2( 0, 40, 64, 8 ) ]
@@ -139,7 +139,7 @@ tracks/0/keys = {
 "values": [ Rect2( 0, 40, 64, 8 ), Rect2( 64, 40, 64, 8 ), Rect2( 0, 48, 64, 8 ), Rect2( 64, 48, 64, 8 ), Rect2( 0, 48, 64, 8 ), Rect2( 64, 40, 64, 8 ) ]
 }
 
-[node name="menu" type="ColorRect"]
+[node name="menu" type="ColorRect" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -218,7 +218,7 @@ blend_times = [  ]
 [node name="timer" type="Timer" parent="." index="6"]
 
 process_mode = 1
-wait_time = 0.5
+wait_time = 0.25
 one_shot = false
 autostart = false
 

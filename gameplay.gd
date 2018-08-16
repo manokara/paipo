@@ -3,10 +3,17 @@ extends ColorRect
 enum PipeType {
 	Horizontal,
 	Vertical,
-	LeftBottom,
-	RightBottom,
-	TopLeft,
-	TopRight,
+	LeftDown,
+	RightDown,
+	UpLeft,
+	UpRight,
+}
+
+enum FlowDir {
+	Right,
+	Up,
+	Left,
+	Down,
 }
 
 const TIME = 120
@@ -15,9 +22,11 @@ const GRID_MAX = [7, 6]
 const FILL_START = [0, 0]
 var cursor = Vector2(0, 0)
 var stopped = false
+var fill_mutex = Mutex.new()
 var fill_state
 
 func _ready():
+	$fader.show()
 	reset()
 	arrange_pipes()
 	$tm_blink.start()
@@ -29,10 +38,9 @@ func _input(event):
 	if event is InputEventKey:
 		if event.pressed:
 			on_key_pressed(event.scancode)
-		else:
-			on_key_released(event.scancode)
 
 func arrange_pipes():
+	# TODO: Check if generated grid is solvable
 	randomize()
 	for pipe in $pipes.get_children():
 		var type = randi() % PIPE_COUNT
@@ -43,7 +51,7 @@ func get_pipe_at(vec):
 	for pipe in $pipes.get_children():
 		if pipe.position == v:
 			return pipe
-	
+
 	return null
 
 func get_pipe_at_cursor():
@@ -60,7 +68,7 @@ func unfill():
 
 	$start/fill.hide()
 	$end/fill.hide()
-	
+
 func flip_pipe():
 	var pipe = get_pipe_at_cursor()
 	assert pipe != null
@@ -68,11 +76,9 @@ func flip_pipe():
 
 func on_key_pressed(key):
 	if stopped: return
-	
+
 	if key == KEY_R:
 		do_reset()
-	elif key == KEY_C:
-		$time.time = 5
 	elif key == KEY_SPACE:
 		flip_pipe()
 	elif key == KEY_F:
@@ -94,32 +100,29 @@ func on_key_pressed(key):
 		cursor.y += 1
 		update_cursor()
 
-func on_key_released(key):
-	pass
-
 func on_time_finished():
 	fill()
 
 func reset():
-	$endround.hide()
-	unfill()
-	$time.pause()
-	$time.time = TIME
-	$cursor.self_modulate.b8 = 255
-	cursor.x = 0
-	cursor.y = 0
-	update_cursor()
-	$cursor.show()
-	$tm_blink.start()
-	arrange_pipes()
-	$time.start()
-	stopped = false
 	fill_state = {
 		"passable": true,
 		"goal": false,
 		"cursor": Vector2(0, -1),
-		"flow_dir": 3, # 0 Right, 1 Top, 2 Left, 3 Bottom
+		"flowdir": Down,
+		"last_pipe": null,
 	}
+
+	unfill()
+	$endround.hide()
+	$time.pause()
+	$time.time = TIME
+	cursor.x = 0; cursor.y = 0
+	update_cursor()
+	arrange_pipes()
+	$time.start()
+	$cursor.show()
+	$tm_blink.start()
+	stopped = false
 
 func do_reset():
 	stop_everything()
@@ -131,8 +134,9 @@ func fade_func():
 
 func stop_everything():
 	stopped = true
+	$time.pause()
 	$tm_blink.stop()
-	#$cursor.hide()
+	$cursor.hide()
 
 func update_cursor():
 	var vec = cursor*8
@@ -142,94 +146,119 @@ func _on_tm_blink_timeout():
 	$cursor.visible = not $cursor.visible
 
 func _on_tm_fill_timeout():
-	print("PIPE FILL ITER\n")
-	
-	if not fill_state["goal"] and not fill_state["passable"]:
+	# As Timer calls are not synchronized, sometimes this runs before the
+	# function even finishes.
+	fill_mutex.lock()
+
+	var last_pipe = fill_state.last_pipe
+	var cur = fill_state.cursor
+	var flowdir = fill_state.flowdir
+	var passable = fill_state.passable
+	var goal = fill_state.goal
+	var pipe
+
+	if last_pipe != null:
+		if not last_pipe.filled:
+			return
+
+	if not goal and not passable:
 		$tm_fill.stop()
 		$anim.play("ohno")
-		print("LOSE!\n\n")
 		return
-	elif fill_state["goal"]:
+	elif goal:
 		$tm_fill.stop()
 		$anim.play("clear")
-		print("WIN!\n\n")
 		return
-	
-	var cur = fill_state["cursor"]
-	print("Cursor: ", cur)
-	print("Flow dir: ", fill_state["flow_dir"])
-	print("----------------")
-	
-	if fill_state["flow_dir"] == 3:
-		# Bottom
-		var pipe = get_pipe_at(cur+Vector2(0, 1))
-		if pipe == null:
-			fill_state["passable"] = false
-			return
-		print("Pipe Pos/Type: ", pipe.position, "/", pipe.type)
-			
-		match pipe.type:
-			Vertical, TopLeft, TopRight:
-				fill_state["cursor"].y += 1
-				if pipe.type == TopLeft: fill_state["flow_dir"] = 2
-				elif pipe.type == TopRight: fill_state["flow_dir"] = 0
-				pipe.fill()
-			_:
-				fill_state["passable"] = false
-	
-	elif fill_state["flow_dir"] == 2:
-		# Left
-		var pipe = get_pipe_at(cur+Vector2(-1, 0))
-		if pipe == null:
-			fill_state["passable"] = false
-			return
-			
-		match pipe.type:
-			Horizontal, RightBottom, TopRight:
-				fill_state["cursor"].x -= 1
-				if pipe.type == RightBottom: fill_state["flow_dir"] = 3
-				elif pipe.type == TopRight: fill_state["flow_dir"] = 1
-				pipe.fill()
-			_:
-				fill_state["passable"] = false
 
-	elif fill_state["flow_dir"] == 1:
-		# Top
-		var pipe = get_pipe_at(cur+Vector2(0, -1))
+	if flowdir == Right:
+		pipe = get_pipe_at(cur+Vector2(1, 0))
+
 		if pipe == null:
-			fill_state["passable"] = false
-			return
-		
-		match pipe.type:
-			Vertical, LeftBottom, RightBottom:
-				fill_state["cursor"].y -= 1
-				if pipe.type == LeftBottom: fill_state["flow_dir"] = 2
-				elif pipe.type == RightBottom: fill_state["flow_dir"] = 0
-				pipe.fill()
-			_:
-				fill_state["passable"] = false
-	
-	elif fill_state["flow_dir"] == 0:
-		# Right
-		var pipe = get_pipe_at(cur+Vector2(1, 0))
-		if pipe == null:
+			# Check if the fill cursor is beside the end pipe
 			if cur.x == 6 and cur.y == 6:
-				fill_state["goal"] = true
+				fill_state.goal = true
 				$end/fill.show()
 			else:
-				fill_state["passable"] = false
+				fill_state.passable = false
 
 			return
-		
+
 		match pipe.type:
-			Horizontal, LeftBottom, TopLeft:
-				fill_state["cursor"].x += 1
-				if pipe.type == LeftBottom: fill_state["flow_dir"] = 3
-				elif pipe.type == TopLeft: fill_state["flow_dir"] = 1
-				pipe.fill()
+			Horizontal, LeftDown, UpLeft:
+				fill_state.cursor.x += 1
+
+				if pipe.type == LeftDown:
+					fill_state.flowdir = 3
+				elif pipe.type == UpLeft:
+					fill_state.flowdir = 1
+
+				pipe.fill(fill_state.flowdir)
 			_:
-				fill_state["passable"] = false
-	
-	print("Cursor: ", fill_state["cursor"])
-	print("Flow dir: ", fill_state["flow_dir"])
-	print("========================")
+				fill_state.passable = false
+
+	elif flowdir == Up:
+		pipe = get_pipe_at(cur+Vector2(0, -1))
+
+		if pipe == null:
+			fill_state.passable = false
+			return
+
+		match pipe.type:
+			Vertical, LeftDown, RightDown:
+				fill_state.cursor.y -= 1
+
+				if pipe.type == LeftDown:
+					fill_state.flowdir = 2
+				elif pipe.type == RightDown:
+					fill_state.flowdir = 0
+
+				pipe.fill(fill_state.flowdir)
+			_:
+				fill_state.passable = false
+
+	elif flowdir == Left:
+		pipe = get_pipe_at(cur+Vector2(-1, 0))
+
+		if pipe == null:
+			fill_state.passable = false
+			return
+
+		match pipe.type:
+			Horizontal, RightDown, UpRight:
+				fill_state.cursor.x -= 1
+				last_pipe.fill(flowdir)
+
+				if pipe.type == RightDown:
+					fill_state.flowdir = 3
+				elif pipe.type == UpRight:
+					fill_state.flowdir = 1
+
+				pipe.fill(fill_state.flowdir)
+			_:
+				fill_state.passable = false
+
+	elif flowdir == Down:
+		pipe = get_pipe_at(cur+Vector2(0, 1))
+
+		if pipe == null:
+			fill_state.passable = false
+			return
+
+		match pipe.type:
+			Vertical, UpLeft, UpRight:
+				fill_state.cursor.y += 1
+
+				if pipe.type == UpLeft:
+					fill_state.flowdir = 2
+				elif pipe.type == UpRight:
+					fill_state.flowdir = 0
+
+				pipe.fill(fill_state.flowdir)
+			_:
+				fill_state.passable = false
+
+	if fill_state.passable:
+		fill_state.last_pipe = pipe
+
+	fill_mutex.unlock()
+

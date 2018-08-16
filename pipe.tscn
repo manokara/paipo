@@ -3,10 +3,11 @@
 [ext_resource path="res://pipe.gd" type="Script" id=1]
 [ext_resource path="res://sheet.png" type="Texture" id=2]
 
-[node name="pipe" type="Node2D"]
+[node name="pipe" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Offset", "Region" ]
+anim_frame = 3
 
 [node name="placeholder" type="Sprite" parent="." index="0"]
 
@@ -23,15 +24,32 @@ position = Vector2( 4, 4 )
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 8, 0, 8, 8 )
-_sections_unfolded = [ "Offset", "Region", "Transform" ]
+_sections_unfolded = [ "Material", "Offset", "Region", "Transform" ]
 
-[node name="fill" type="Sprite" parent="." index="2"]
+[node name="fill" type="Sprite" parent="pipe" index="0"]
 
 visible = false
-position = Vector2( 4, 4 )
 texture = ExtResource( 2 )
 region_enabled = true
-region_rect = Rect2( 8, 8, 8, 8 )
-_sections_unfolded = [ "Offset", "Region", "Transform" ]
+region_rect = Rect2( 96, 56, 8, 8 )
+_sections_unfolded = [ "Offset", "Region", "Transform", "Visibility" ]
+
+[node name="tm_next" type="Timer" parent="." index="2"]
+
+process_mode = 0
+wait_time = 0.03
+one_shot = false
+autostart = false
+
+[node name="tm_end" type="Timer" parent="." index="3"]
+
+process_mode = 0
+wait_time = 0.1
+one_shot = true
+autostart = false
+
+[connection signal="timeout" from="tm_next" to="." method="_on_tm_next_timeout"]
+
+[connection signal="timeout" from="tm_end" to="." method="_on_tm_end_timeout"]
 
 
