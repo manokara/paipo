@@ -1,10 +1,10 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://menu.gd" type="Script" id=1]
-[ext_resource path="res://sheet.png" type="Texture" id=2]
-[ext_resource path="res://select.wav" type="AudioStream" id=3]
-[ext_resource path="res://water-noise.wav" type="AudioStream" id=4]
-[ext_resource path="res://water.gd" type="Script" id=5]
+[ext_resource path="res://scripts/menu.gd" type="Script" id=1]
+[ext_resource path="res://textures/sheet.png" type="Texture" id=2]
+[ext_resource path="res://sounds/select.wav" type="AudioStream" id=3]
+[ext_resource path="res://sounds/water.wav" type="AudioStream" id=4]
+[ext_resource path="res://scripts/water.gd" type="Script" id=5]
 
 [sub_resource type="Animation" id=1]
 resource_name = "start"

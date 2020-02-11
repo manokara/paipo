@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/turn.wav-fa013a93c070ce352ce5934da8b5ac12.sample"
+path="res://.import/ohno.wav-2dcdc0e19168aff21714d1c421dcd090.sample"
 
 [deps]
 
-source_file="res://turn.wav"
-dest_files=[ "res://.import/turn.wav-fa013a93c070ce352ce5934da8b5ac12.sample" ]
+source_file="res://sounds/ohno.wav"
+dest_files=[ "res://.import/ohno.wav-2dcdc0e19168aff21714d1c421dcd090.sample" ]
 
 [params]
 

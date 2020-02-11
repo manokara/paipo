@@ -1,7 +1,7 @@
 tool
 extends Control
 
-const TEX = preload("res://sheet.png")
+const TEX = preload("res://textures/sheet.png")
 const BASEPOS = Vector2(66, 1)
 const CHARSIZE = Vector2(5, 5)
 export var time = 0 # Seconds

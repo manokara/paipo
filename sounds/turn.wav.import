@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/clear.wav-541cffbda73aae8c9a122b59673bc646.sample"
+path="res://.import/turn.wav-5f5276147ba9e6f980a597040bb2acbc.sample"
 
 [deps]
 
-source_file="res://clear.wav"
-dest_files=[ "res://.import/clear.wav-541cffbda73aae8c9a122b59673bc646.sample" ]
+source_file="res://sounds/turn.wav"
+dest_files=[ "res://.import/turn.wav-5f5276147ba9e6f980a597040bb2acbc.sample" ]
 
 [params]
 

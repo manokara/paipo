@@ -26,5 +26,5 @@ func _on_timer_timeout():
 	press_tick += 1
 	$press.visible = !$press.visible
 	if press_tick == MAX_TICK:
-		get_tree().change_scene("res://gameplay.tscn")
+		get_tree().change_scene("res://tscn/gameplay.tscn")
 

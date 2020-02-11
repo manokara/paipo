@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/ohno.wav-0f7c9e978597bde6bf8e2cbe4ce958e1.sample"
+path="res://.import/select.wav-bceeb6846ca3863c8ad7278557d7416b.sample"
 
 [deps]
 
-source_file="res://ohno.wav"
-dest_files=[ "res://.import/ohno.wav-0f7c9e978597bde6bf8e2cbe4ce958e1.sample" ]
+source_file="res://sounds/select.wav"
+dest_files=[ "res://.import/select.wav-bceeb6846ca3863c8ad7278557d7416b.sample" ]
 
 [params]
 
