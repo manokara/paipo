@@ -7,10 +7,8 @@
 [ext_resource path="res://water.gd" type="Script" id=5]
 
 [sub_resource type="Animation" id=1]
-
 resource_name = "start"
 length = 3.0
-loop = false
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("title:self_modulate")
@@ -127,11 +125,9 @@ tracks/8/keys = {
 }
 
 [sub_resource type="Animation" id=2]
-
 resource_name = "waterstream"
 length = 0.6
 loop = true
-step = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("water f:region_rect")
 tracks/0/interp = 1
@@ -146,24 +142,12 @@ tracks/0/keys = {
 }
 
 [node name="menu" type="ColorRect"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_right = 64.0
 margin_bottom = 64.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 color = Color( 0, 0, 0, 1 )
 script = ExtResource( 1 )
 
-[node name="water r" type="Sprite" parent="." index="0"]
-
+[node name="water r" type="Sprite" parent="."]
 position = Vector2( 64, 0 )
 scale = Vector2( 1, 3.07408 )
 texture = ExtResource( 2 )
@@ -172,85 +156,52 @@ offset = Vector2( -16, 0 )
 flip_h = true
 region_enabled = true
 region_rect = Rect2( 48, 16, 16, 8 )
-_sections_unfolded = [ "Offset", "Region", "Transform", "Visibility" ]
 
-[node name="water l" type="Sprite" parent="." index="1"]
-
+[node name="water l" type="Sprite" parent="."]
 scale = Vector2( 1, 3.33333 )
 texture = ExtResource( 2 )
 centered = false
 region_enabled = true
 region_rect = Rect2( 48, 16, 16, 8 )
-_sections_unfolded = [ "Offset", "Region", "Transform", "Visibility" ]
 
-[node name="water f" type="Sprite" parent="." index="2"]
-
+[node name="water f" type="Sprite" parent="."]
 visible = false
 position = Vector2( 0, 56 )
 texture = ExtResource( 2 )
 centered = false
 region_enabled = true
 region_rect = Rect2( 0, 40, 64, 8 )
-_sections_unfolded = [ "Offset", "Region", "Transform", "Visibility" ]
 
-[node name="title" type="Sprite" parent="." index="3"]
-
+[node name="title" type="Sprite" parent="."]
 position = Vector2( 12, 6 )
 texture = ExtResource( 2 )
 centered = false
 region_enabled = true
 region_rect = Rect2( 24, 1, 40, 14 )
-_sections_unfolded = [ "Offset", "Region", "Transform", "Visibility" ]
 
-[node name="press" type="Sprite" parent="." index="4"]
-
+[node name="press" type="Sprite" parent="."]
 position = Vector2( 11, 39 )
 texture = ExtResource( 2 )
 centered = false
 region_enabled = true
 region_rect = Rect2( 0, 18, 42, 5 )
-_sections_unfolded = [ "Offset", "Region", "Transform", "Visibility" ]
 
-[node name="anim" type="AnimationPlayer" parent="." index="5"]
-
-root_node = NodePath("..")
+[node name="anim" type="AnimationPlayer" parent="."]
 autoplay = "start"
-playback_process_mode = 1
-playback_default_blend_time = 0.0
-playback_speed = 1.0
 anims/start = SubResource( 1 )
 anims/waterstream = SubResource( 2 )
-blend_times = [  ]
 
-[node name="timer" type="Timer" parent="." index="6"]
-
-process_mode = 1
+[node name="timer" type="Timer" parent="."]
 wait_time = 0.25
-one_shot = false
-autostart = false
 
-[node name="aud_press" type="AudioStreamPlayer" parent="." index="7"]
-
+[node name="aud_press" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
 volume_db = -10.0
-pitch_scale = 1.0
-autoplay = false
-mix_target = 0
-bus = "Master"
 
-[node name="aud_water" type="AudioStreamPlayer" parent="." index="8"]
-
+[node name="aud_water" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
 volume_db = -16.0
-pitch_scale = 1.0
-autoplay = false
-mix_target = 0
 bus = "Water"
 script = ExtResource( 5 )
-_sections_unfolded = [ "Pause" ]
-
 [connection signal="animation_finished" from="anim" to="." method="_on_anim_animation_finished"]
-
 [connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]
-
-

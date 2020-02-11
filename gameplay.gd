@@ -76,7 +76,7 @@ func unfill():
 
 func flip_pipe():
 	var pipe = get_pipe_at_cursor()
-	assert pipe != null
+	assert(pipe != null)
 	$sfx.play()
 	pipe.flip()
 
@@ -114,7 +114,7 @@ func reset():
 		"passable": true,
 		"goal": false,
 		"cursor": Vector2(0, -1),
-		"flowdir": Down,
+		"flowdir": FlowDir.Down,
 		"last_pipe": null,
 	}
 
@@ -183,7 +183,7 @@ func _on_tm_fill_timeout():
 		$anim.play("clear")
 		return
 
-	if flowdir == Right:
+	if flowdir == FlowDir.Right:
 		pipe = get_pipe_at(cur+Vector2(1, 0))
 
 		if pipe == null:
@@ -197,19 +197,19 @@ func _on_tm_fill_timeout():
 			return
 
 		match pipe.type:
-			Horizontal, LeftDown, UpLeft:
+			PipeType.Horizontal, PipeType.LeftDown, PipeType.UpLeft:
 				fill_state.cursor.x += 1
 
-				if pipe.type == LeftDown:
+				if pipe.type == PipeType.LeftDown:
 					fill_state.flowdir = 3
-				elif pipe.type == UpLeft:
+				elif pipe.type == PipeType.UpLeft:
 					fill_state.flowdir = 1
 
 				pipe.fill(fill_state.flowdir)
 			_:
 				fill_state.passable = false
 
-	elif flowdir == Up:
+	elif flowdir == FlowDir.Up:
 		pipe = get_pipe_at(cur+Vector2(0, -1))
 
 		if pipe == null:
@@ -217,19 +217,19 @@ func _on_tm_fill_timeout():
 			return
 
 		match pipe.type:
-			Vertical, LeftDown, RightDown:
+			PipeType.Vertical, PipeType.LeftDown, PipeType.RightDown:
 				fill_state.cursor.y -= 1
 
-				if pipe.type == LeftDown:
+				if pipe.type == PipeType.LeftDown:
 					fill_state.flowdir = 2
-				elif pipe.type == RightDown:
+				elif pipe.type == PipeType.RightDown:
 					fill_state.flowdir = 0
 
 				pipe.fill(fill_state.flowdir)
 			_:
 				fill_state.passable = false
 
-	elif flowdir == Left:
+	elif flowdir == FlowDir.Left:
 		pipe = get_pipe_at(cur+Vector2(-1, 0))
 
 		if pipe == null:
@@ -237,20 +237,20 @@ func _on_tm_fill_timeout():
 			return
 
 		match pipe.type:
-			Horizontal, RightDown, UpRight:
+			PipeType.Horizontal, PipeType.RightDown, PipeType.UpRight:
 				fill_state.cursor.x -= 1
 				last_pipe.fill(flowdir)
 
-				if pipe.type == RightDown:
+				if pipe.type == PipeType.RightDown:
 					fill_state.flowdir = 3
-				elif pipe.type == UpRight:
+				elif pipe.type == PipeType.UpRight:
 					fill_state.flowdir = 1
 
 				pipe.fill(fill_state.flowdir)
 			_:
 				fill_state.passable = false
 
-	elif flowdir == Down:
+	elif flowdir == FlowDir.Down:
 		pipe = get_pipe_at(cur+Vector2(0, 1))
 
 		if pipe == null:
@@ -258,12 +258,12 @@ func _on_tm_fill_timeout():
 			return
 
 		match pipe.type:
-			Vertical, UpLeft, UpRight:
+			PipeType.Vertical, PipeType.UpLeft, PipeType.UpRight:
 				fill_state.cursor.y += 1
 
-				if pipe.type == UpLeft:
+				if pipe.type == PipeType.UpLeft:
 					fill_state.flowdir = 2
-				elif pipe.type == UpRight:
+				elif pipe.type == PipeType.UpRight:
 					fill_state.flowdir = 0
 
 				pipe.fill(fill_state.flowdir)

@@ -2,7 +2,7 @@
 
 ![gif](game.gif)
 
-*Made in Godot 3.0.6*
+*Made with Godot 3.2*
 
 I made this game for LOWREZJAM, it was almost complete but I didn't have time to compose or find good music... Maybe I'll polish it a little bit later.
 

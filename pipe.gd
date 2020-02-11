@@ -16,14 +16,14 @@ enum FlowDir {
 	Down,
 }
 
-const RECTS = {
+var RECTS = {
 	# X Offset (from (8,0)), Flip (0 = no, 1 = H, 2 = V, 3 = HV), Rotate 90
-	Horizontal: [0, 0, true],
-	Vertical: [0, 0, false],
-	LeftDown: [8, 0, false],
-	RightDown: [8, 1, false],
-	UpLeft: [8, 2, false],
-	UpRight: [8, 3, false]
+	PipeType.Horizontal: [0, 0, true],
+	PipeType.Vertical: [0, 0, false],
+	PipeType.LeftDown: [8, 0, false],
+	PipeType.RightDown: [8, 1, false],
+	PipeType.UpLeft: [8, 2, false],
+	PipeType.UpRight: [8, 3, false]
 }
 
 var type = null
@@ -38,10 +38,10 @@ func _ready():
 func fill(flowdir):
 
 	match [flowdir, self.type]:
-		[_, Horizontal], [_, Vertical]:
-			if flowdir == Right:
+		[_, PipeType.Horizontal], [_, PipeType.Vertical]:
+			if flowdir == FlowDir.Right:
 				$pipe/fill.flip_v = true
-		[Left, _], [Right, _]:
+		[FlowDir.Left, _], [FlowDir.Right, _]:
 			$pipe/fill.region_rect.position.y = 72
 
 	$pipe/fill.show()
@@ -56,18 +56,18 @@ func unfill():
 
 func flip():
 	match type:
-		Horizontal:
-			set_type(Vertical)
-		Vertical:
-			set_type(Horizontal)
-		LeftDown:
-			set_type(UpLeft)
-		UpLeft:
-			set_type(UpRight)
-		UpRight:
-			set_type(RightDown)
-		RightDown:
-			set_type(LeftDown)
+		PipeType.Horizontal:
+			set_type(PipeType.Vertical)
+		PipeType.Vertical:
+			set_type(PipeType.Horizontal)
+		PipeType.LeftDown:
+			set_type(PipeType.UpLeft)
+		PipeType.UpLeft:
+			set_type(PipeType.UpRight)
+		PipeType.UpRight:
+			set_type(PipeType.RightDown)
+		PipeType.RightDown:
+			set_type(PipeType.LeftDown)
 
 func set_type(type):
 	self.type = type
