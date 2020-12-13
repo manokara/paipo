@@ -2,11 +2,11 @@
 
 ![gif](game.gif)
 
-*Made with Godot 3.2*
+*Made with Godot 3.2.3*
 
 I made this game for LOWREZJAM, it was almost complete but I didn't have time to compose or find good music... Maybe I'll polish it a little bit later.
 
-It's one of these pipe puzzles where you have to arrange the pipes in a way so that water reaches the other end before time runs out. There are no solvability checks, in RNG we trust! That means sometimes you can't solve the puzzle and you'll have to reset. Also, there's no progression, each round is just randomly generated pipes on a 7x7 grid.
+It's one of these pipe puzzles where you have to arrange the pipes in a way so that water reaches the other end before time runs out. There's no progression, each round is just randomly generated pipes on a 8x7 grid.
 
 ## Controls
 
@@ -14,3 +14,4 @@ It's one of these pipe puzzles where you have to arrange the pipes in a way so t
 - Space: changes pipe orientation
 - F: Fill the pipes
 - R: Reset round
+

@@ -27,14 +27,23 @@ var cursor = Vector2(0, 0)
 var stopped = false
 var fill_mutex = Mutex.new()
 var fill_state
+var grid = [
+	[null, null, null, null, null, null, null, null],
+	[null, null, null, null, null, null, null, null],
+	[null, null, null, null, null, null, null, null],
+	[null, null, null, null, null, null, null, null],
+	[null, null, null, null, null, null, null, null],
+	[null, null, null, null, null, null, null, null],
+	[null, null, null, null, null, null, null, null],
+]
 
 func _ready():
+	init_grid()
 	$fader.show()
 	reset()
-	arrange_pipes()
+	setup_pipes()
 	$tm_blink.start()
-	$time.connect("finished", self, "on_time_finished")
-	$time.start()
+	$time/tm.start()
 	$music.play()
 	$anim.play("fade_out")
 
@@ -43,12 +52,67 @@ func _input(event):
 		if event.pressed:
 			on_key_pressed(event.scancode)
 
-func arrange_pipes():
-	# TODO: Check if generated grid is solvable
-	randomize()
-	for pipe in $pipes.get_children():
-		var type = randi() % PIPE_COUNT
-		pipe.set_type(type)
+func init_grid():
+	var pipes = $pipes.get_children()
+
+	for y in range(7):
+		for x in range(8):
+			if x == 7 and y == 6:
+				pass # end sink
+			else:
+				grid[y][x] = pipes[x * 7 + y]
+
+func setup_pipes():
+	var last_type = null
+	var last_type_count = 0
+
+	# Main horizontal pass
+	for y in range(7):
+		for x in range(8):
+			if x == 7 and y == 6:
+				break
+
+			var type = randi() % PIPE_COUNT
+			var pipe = grid[y][x]
+			pipe.set_type(type)
+
+			if last_type == type:
+				last_type_count += 1
+
+				if last_type_count == 0:
+					while last_type != type:
+						type = randi() % PIPE_COUNT
+
+					pipe.set_type(type)
+			else:
+				last_type_count = 1
+
+			last_type = type
+
+	last_type = null
+	last_type_count = 0
+
+	# Vertical deduplication pass
+	for x in range(8):
+		for y in range(7):
+			if x == 7 and y == 6:
+				break
+
+			var pipe = grid[y][x]
+			var type = pipe.type
+
+			if last_type == type:
+				last_type_count += 1
+
+				if last_type_count == 0:
+					while last_type != type:
+						type = randi() % PIPE_COUNT
+
+					pipe.set_type(type)
+			else:
+				last_type_count = 1
+
+			last_type = type
 
 func get_pipe_at(vec):
 	var v = vec*8
@@ -125,7 +189,7 @@ func reset():
 	$time.time = TIME
 	cursor.x = 0; cursor.y = 0
 	update_cursor()
-	arrange_pipes()
+	setup_pipes()
 	$time.start()
 	$cursor.show()
 	$tm_blink.start()

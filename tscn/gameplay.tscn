@@ -9,11 +9,8 @@
 [ext_resource path="res://scripts/water.gd" type="Script" id=7]
 
 [sub_resource type="Animation" id=1]
-
 resource_name = "clear"
 length = 2.0
-loop = false
-step = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("endround:rect_scale")
 tracks/0/interp = 1
@@ -90,11 +87,7 @@ tracks/5/keys = {
 }
 
 [sub_resource type="Animation" id=2]
-
 resource_name = "fade_in"
-length = 1.0
-loop = false
-step = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("fader:rect_size")
 tracks/0/interp = 1
@@ -135,11 +128,7 @@ tracks/2/keys = {
 }
 
 [sub_resource type="Animation" id=3]
-
 resource_name = "fade_out"
-length = 1.0
-loop = false
-step = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("fader:rect_position")
 tracks/0/interp = 1
@@ -177,10 +166,7 @@ tracks/2/keys = {
 }
 
 [sub_resource type="Animation" id=4]
-
 length = 2.0
-loop = false
-step = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("endround:rect_scale")
 tracks/0/interp = 1
@@ -256,85 +242,52 @@ tracks/5/keys = {
 } ]
 }
 
-[node name="gameplay" type="ColorRect" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="gameplay" type="ColorRect"]
 margin_right = 64.0
 margin_bottom = 64.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 color = Color( 0, 0, 0, 1 )
 script = ExtResource( 1 )
-_sections_unfolded = [ "Rect" ]
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="time label" type="Sprite" parent="." index="0"]
-
+[node name="time label" type="Sprite" parent="."]
 position = Vector2( 20, 0 )
 texture = ExtResource( 2 )
 centered = false
 region_enabled = true
 region_rect = Rect2( 24, 56, 16, 8 )
-_sections_unfolded = [ "Offset", "Region" ]
 
-[node name="time" type="Control" parent="." index="1"]
-
-editor/display_folded = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="time" type="Control" parent="."]
 margin_left = 38.0
 margin_top = 1.0
 margin_right = 62.0
 margin_bottom = 6.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 script = ExtResource( 3 )
-_sections_unfolded = [ "Hint", "Rect" ]
+__meta__ = {
+"_edit_use_anchors_": false
+}
 time = 120
 
-[node name="tm" type="Timer" parent="time" index="0"]
+[node name="tm" type="Timer" parent="time"]
 
-process_mode = 1
-wait_time = 1.0
-one_shot = false
-autostart = false
-
-[node name="start" type="Sprite" parent="." index="2"]
-
-editor/display_folded = true
+[node name="start" type="Sprite" parent="."]
 position = Vector2( 4, 0 )
 texture = ExtResource( 2 )
 centered = false
 offset = Vector2( -4, 0 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 8, 8 )
-_sections_unfolded = [ "Offset", "Region" ]
 
-[node name="fill" type="Sprite" parent="start" index="0"]
-
+[node name="fill" type="Sprite" parent="start"]
 visible = false
 texture = ExtResource( 2 )
 centered = false
 offset = Vector2( -4, 0 )
 region_enabled = true
 region_rect = Rect2( 0, 8, 8, 8 )
-_sections_unfolded = [ "Offset", "Region" ]
 
-[node name="end" type="Sprite" parent="." index="3"]
-
-editor/display_folded = true
+[node name="end" type="Sprite" parent="."]
 position = Vector2( 64, 60 )
 rotation = 1.5708
 texture = ExtResource( 2 )
@@ -342,426 +295,300 @@ centered = false
 offset = Vector2( -4, 0 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 8, 8 )
-_sections_unfolded = [ "Offset", "Region", "Transform" ]
 
-[node name="fill" type="Sprite" parent="end" index="0"]
-
+[node name="fill" type="Sprite" parent="end"]
 visible = false
 texture = ExtResource( 2 )
 centered = false
 offset = Vector2( -4, 0 )
 region_enabled = true
 region_rect = Rect2( 0, 8, 8, 8 )
-_sections_unfolded = [ "Offset", "Region", "Transform" ]
 
-[node name="pipes" type="Position2D" parent="." index="4"]
-
-editor/display_folded = true
+[node name="pipes" type="Position2D" parent="."]
 position = Vector2( 0, 8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="(0, 0)" parent="pipes" index="0" instance=ExtResource( 4 )]
-
+[node name="(0, 0)" parent="pipes" instance=ExtResource( 4 )]
 anim_frame = 0
 
-[node name="(0, 1)" parent="pipes" index="1" instance=ExtResource( 4 )]
-
+[node name="(0, 1)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 0, 8 )
 anim_frame = 0
 
-[node name="(0, 2)" parent="pipes" index="2" instance=ExtResource( 4 )]
-
+[node name="(0, 2)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 0, 16 )
 anim_frame = 0
 
-[node name="(0, 3)" parent="pipes" index="3" instance=ExtResource( 4 )]
-
+[node name="(0, 3)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 0, 24 )
 anim_frame = 0
 
-[node name="(0, 4)" parent="pipes" index="4" instance=ExtResource( 4 )]
-
+[node name="(0, 4)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 0, 32 )
 anim_frame = 0
 
-[node name="(0, 5)" parent="pipes" index="5" instance=ExtResource( 4 )]
-
+[node name="(0, 5)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 0, 40 )
 anim_frame = 0
 
-[node name="(0, 6)" parent="pipes" index="6" instance=ExtResource( 4 )]
-
+[node name="(0, 6)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 0, 48 )
 anim_frame = 0
 
-[node name="(1, 0)" parent="pipes" index="7" instance=ExtResource( 4 )]
-
+[node name="(1, 0)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 8, 0 )
 anim_frame = 0
 
-[node name="(1, 1)" parent="pipes" index="8" instance=ExtResource( 4 )]
-
+[node name="(1, 1)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 8, 8 )
 anim_frame = 0
 
-[node name="(1, 2)" parent="pipes" index="9" instance=ExtResource( 4 )]
-
+[node name="(1, 2)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 8, 16 )
 anim_frame = 0
 
-[node name="(1, 3)" parent="pipes" index="10" instance=ExtResource( 4 )]
-
+[node name="(1, 3)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 8, 24 )
 anim_frame = 0
 
-[node name="(1, 4)" parent="pipes" index="11" instance=ExtResource( 4 )]
-
+[node name="(1, 4)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 8, 32 )
 anim_frame = 0
 
-[node name="(1, 5)" parent="pipes" index="12" instance=ExtResource( 4 )]
-
+[node name="(1, 5)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 8, 40 )
 anim_frame = 0
 
-[node name="(1, 6)" parent="pipes" index="13" instance=ExtResource( 4 )]
-
+[node name="(1, 6)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 8, 48 )
 anim_frame = 0
 
-[node name="(2, 0)" parent="pipes" index="14" instance=ExtResource( 4 )]
-
+[node name="(2, 0)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 16, 0 )
 anim_frame = 0
 
-[node name="(2, 1)" parent="pipes" index="15" instance=ExtResource( 4 )]
-
+[node name="(2, 1)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 16, 8 )
 anim_frame = 0
 
-[node name="(2, 2)" parent="pipes" index="16" instance=ExtResource( 4 )]
-
+[node name="(2, 2)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 16, 16 )
 anim_frame = 0
 
-[node name="(2, 3)" parent="pipes" index="17" instance=ExtResource( 4 )]
-
+[node name="(2, 3)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 16, 24 )
 anim_frame = 0
 
-[node name="(2, 4)" parent="pipes" index="18" instance=ExtResource( 4 )]
-
+[node name="(2, 4)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 16, 32 )
 anim_frame = 0
 
-[node name="(2, 5)" parent="pipes" index="19" instance=ExtResource( 4 )]
-
+[node name="(2, 5)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 16, 40 )
 anim_frame = 0
 
-[node name="(2, 6)" parent="pipes" index="20" instance=ExtResource( 4 )]
-
+[node name="(2, 6)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 16, 48 )
 anim_frame = 0
 
-[node name="(3, 0)" parent="pipes" index="21" instance=ExtResource( 4 )]
-
+[node name="(3, 0)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 24, 0 )
 anim_frame = 0
 
-[node name="(3, 1)" parent="pipes" index="22" instance=ExtResource( 4 )]
-
+[node name="(3, 1)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 24, 8 )
 anim_frame = 0
 
-[node name="(3, 2)" parent="pipes" index="23" instance=ExtResource( 4 )]
-
+[node name="(3, 2)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 24, 16 )
 anim_frame = 0
 
-[node name="(3, 3)" parent="pipes" index="24" instance=ExtResource( 4 )]
-
+[node name="(3, 3)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 24, 24 )
 anim_frame = 0
 
-[node name="(3, 4)" parent="pipes" index="25" instance=ExtResource( 4 )]
-
+[node name="(3, 4)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 24, 32 )
 anim_frame = 0
 
-[node name="(3, 5)" parent="pipes" index="26" instance=ExtResource( 4 )]
-
+[node name="(3, 5)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 24, 40 )
 anim_frame = 0
 
-[node name="(3, 6)" parent="pipes" index="27" instance=ExtResource( 4 )]
-
+[node name="(3, 6)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 24, 48 )
 anim_frame = 0
 
-[node name="(4, 0)" parent="pipes" index="28" instance=ExtResource( 4 )]
-
+[node name="(4, 0)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 32, 0 )
 anim_frame = 0
 
-[node name="(4, 1)" parent="pipes" index="29" instance=ExtResource( 4 )]
-
+[node name="(4, 1)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 32, 8 )
 anim_frame = 0
 
-[node name="(4, 2)" parent="pipes" index="30" instance=ExtResource( 4 )]
-
+[node name="(4, 2)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 32, 16 )
 anim_frame = 0
 
-[node name="(4, 3)" parent="pipes" index="31" instance=ExtResource( 4 )]
-
+[node name="(4, 3)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 32, 24 )
 anim_frame = 0
 
-[node name="(4, 4)" parent="pipes" index="32" instance=ExtResource( 4 )]
-
+[node name="(4, 4)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 32, 32 )
 anim_frame = 0
 
-[node name="(4, 5)" parent="pipes" index="33" instance=ExtResource( 4 )]
-
+[node name="(4, 5)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 32, 40 )
 anim_frame = 0
 
-[node name="(4, 6)" parent="pipes" index="34" instance=ExtResource( 4 )]
-
+[node name="(4, 6)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 32, 48 )
 anim_frame = 0
 
-[node name="(5, 0)" parent="pipes" index="35" instance=ExtResource( 4 )]
-
+[node name="(5, 0)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 40, 0 )
 anim_frame = 0
 
-[node name="(5, 1)" parent="pipes" index="36" instance=ExtResource( 4 )]
-
+[node name="(5, 1)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 40, 8 )
 anim_frame = 0
 
-[node name="(5, 2)" parent="pipes" index="37" instance=ExtResource( 4 )]
-
+[node name="(5, 2)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 40, 16 )
 anim_frame = 0
 
-[node name="(5, 3)" parent="pipes" index="38" instance=ExtResource( 4 )]
-
+[node name="(5, 3)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 40, 24 )
 anim_frame = 0
 
-[node name="(5, 4)" parent="pipes" index="39" instance=ExtResource( 4 )]
-
+[node name="(5, 4)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 40, 32 )
 anim_frame = 0
 
-[node name="(5, 5)" parent="pipes" index="40" instance=ExtResource( 4 )]
-
+[node name="(5, 5)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 40, 40 )
 anim_frame = 0
 
-[node name="(5, 6)" parent="pipes" index="41" instance=ExtResource( 4 )]
-
+[node name="(5, 6)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 40, 48 )
 anim_frame = 0
 
-[node name="(6, 0)" parent="pipes" index="42" instance=ExtResource( 4 )]
-
+[node name="(6, 0)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 48, 0 )
 anim_frame = 0
 
-[node name="(6, 1)" parent="pipes" index="43" instance=ExtResource( 4 )]
-
+[node name="(6, 1)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 48, 8 )
 anim_frame = 0
 
-[node name="(6, 2)" parent="pipes" index="44" instance=ExtResource( 4 )]
-
+[node name="(6, 2)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 48, 16 )
 anim_frame = 0
 
-[node name="(6, 3)" parent="pipes" index="45" instance=ExtResource( 4 )]
-
+[node name="(6, 3)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 48, 24 )
 anim_frame = 0
 
-[node name="(6, 4)" parent="pipes" index="46" instance=ExtResource( 4 )]
-
+[node name="(6, 4)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 48, 32 )
 anim_frame = 0
 
-[node name="(6, 5)" parent="pipes" index="47" instance=ExtResource( 4 )]
-
+[node name="(6, 5)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 48, 40 )
 anim_frame = 0
 
-[node name="(6, 6)" parent="pipes" index="48" instance=ExtResource( 4 )]
-
+[node name="(6, 6)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 48, 48 )
 anim_frame = 0
 
-[node name="(7, 0)" parent="pipes" index="49" instance=ExtResource( 4 )]
-
+[node name="(7, 0)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 56, 0 )
 anim_frame = 0
 
-[node name="(7, 1)" parent="pipes" index="50" instance=ExtResource( 4 )]
-
+[node name="(7, 1)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 56, 8 )
 anim_frame = 0
 
-[node name="(7, 2)" parent="pipes" index="51" instance=ExtResource( 4 )]
-
+[node name="(7, 2)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 56, 16 )
 anim_frame = 0
 
-[node name="(7, 3)" parent="pipes" index="52" instance=ExtResource( 4 )]
-
+[node name="(7, 3)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 56, 24 )
 anim_frame = 0
 
-[node name="(7, 4)" parent="pipes" index="53" instance=ExtResource( 4 )]
-
+[node name="(7, 4)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 56, 32 )
 anim_frame = 0
 
-[node name="(7, 5)" parent="pipes" index="54" instance=ExtResource( 4 )]
-
+[node name="(7, 5)" parent="pipes" instance=ExtResource( 4 )]
 position = Vector2( 56, 40 )
 anim_frame = 0
 
-[node name="cursor" type="Sprite" parent="." index="5"]
-
+[node name="cursor" type="Sprite" parent="."]
 position = Vector2( 0, 8 )
 texture = ExtResource( 2 )
 centered = false
 region_enabled = true
 region_rect = Rect2( 56, 32, 8, 8 )
-_sections_unfolded = [ "Material", "Offset", "Region", "Visibility" ]
 
-[node name="endround" type="ColorRect" parent="." index="6"]
-
-editor/display_folded = true
-visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="endround" type="ColorRect" parent="."]
 margin_top = 22.0
 margin_right = 64.0
 margin_bottom = 46.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
+rect_scale = Vector2( 1e-05, 1 )
 color = Color( 0, 0, 0, 1 )
-_sections_unfolded = [ "Rect", "Visibility" ]
 
-[node name="ohno" type="Sprite" parent="endround" index="0"]
-
+[node name="ohno" type="Sprite" parent="endround"]
 visible = false
 position = Vector2( 5, 5 )
 texture = ExtResource( 2 )
 centered = false
 region_enabled = true
 region_rect = Rect2( 40, 56, 56, 16 )
-_sections_unfolded = [ "Offset", "Region" ]
 
-[node name="clear" type="Sprite" parent="endround" index="1"]
-
+[node name="clear" type="Sprite" parent="endround"]
+visible = false
 position = Vector2( 4, 20 )
 texture = ExtResource( 2 )
 centered = false
 offset = Vector2( 0, -16 )
 region_enabled = true
 region_rect = Rect2( 40, 56, 56, 16 )
-_sections_unfolded = [ "Offset", "Region", "Transform" ]
 
-[node name="fader" type="ColorRect" parent="." index="7"]
-
+[node name="fader" type="ColorRect" parent="."]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_right = 64.0
 margin_bottom = 64.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 color = Color( 0, 0, 0, 1 )
-_sections_unfolded = [ "Rect" ]
 
-[node name="tm_blink" type="Timer" parent="." index="8"]
-
-process_mode = 1
+[node name="tm_blink" type="Timer" parent="."]
 wait_time = 0.4
-one_shot = false
-autostart = false
 
-[node name="tm_fill" type="Timer" parent="." index="9"]
-
-process_mode = 1
+[node name="tm_fill" type="Timer" parent="."]
 wait_time = 0.05
-one_shot = false
-autostart = false
 
-[node name="anim" type="AnimationPlayer" parent="." index="10"]
-
-root_node = NodePath("..")
-autoplay = ""
-playback_process_mode = 1
-playback_default_blend_time = 0.0
-playback_speed = 1.0
+[node name="anim" type="AnimationPlayer" parent="."]
 anims/clear = SubResource( 1 )
 anims/fade_in = SubResource( 2 )
 anims/fade_out = SubResource( 3 )
 anims/ohno = SubResource( 4 )
-blend_times = [  ]
 
-[node name="music" type="AudioStreamPlayer" parent="." index="11"]
+[node name="music" type="AudioStreamPlayer" parent="."]
 
-stream = null
-volume_db = 0.0
-pitch_scale = 1.0
-autoplay = false
-mix_target = 0
-bus = "Master"
-
-[node name="sfx" type="AudioStreamPlayer" parent="." index="12"]
-
+[node name="sfx" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
 volume_db = -8.0
-pitch_scale = 1.0
-autoplay = false
-mix_target = 0
-bus = "Master"
 
-[node name="water" type="AudioStreamPlayer" parent="." index="13"]
-
+[node name="water" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
 volume_db = -16.0
-pitch_scale = 1.0
-autoplay = false
-mix_target = 0
 bus = "Water"
 script = ExtResource( 7 )
-
 [connection signal="timeout" from="time/tm" to="time" method="_on_tm_timeout"]
-
 [connection signal="timeout" from="tm_blink" to="." method="_on_tm_blink_timeout"]
-
 [connection signal="timeout" from="tm_fill" to="." method="_on_tm_fill_timeout"]
-
-
